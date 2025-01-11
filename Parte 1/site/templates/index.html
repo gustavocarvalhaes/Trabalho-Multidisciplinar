@@ -1,0 +1,68 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Mola Maluca - Slinky</title>
+    <link rel="stylesheet" href="/static/styles.css">
+</head>
+<body>
+    <header>
+        <h1>Mola Maluca</h1>
+        <p>Explorando o comportamento fascinante da Slinky em queda livre.</p>
+    </header>
+
+    <main class="container">
+        <section>
+            <h2>Introdução</h2>
+            <p>Molas são usadas em diversas áreas do conhecimento. A Slinky, conhecida como mola maluca, é um brinquedo que apresenta um comportamento curioso durante a queda livre.</p>
+
+        <video loop autoplay muted class="video">
+            <source src="static/videos/falling-slinky-orange.mp4" type="video/mp4">
+            Seu navegador não suporta o elemento de vídeo.
+        </video>
+        <figcaption><strong>Vídeo 1 </strong>- <i>Mola maluca em queda livre</i></figcaption>
+                  
+        </section>
+
+        <section>
+            <h2>Passo a Passo</h2>
+
+            <article>
+                <h3>Passo 1: Discretização</h3>
+                <p>A mola é dividida em espiras. Cada espira tem uma posição, massa e constante elástica.</p>
+                <pre><code>
+                </code></pre>
+                <div class="image-wrap">
+                    <img  width="450px" src="/static/images/slinky_dicretization.png" alt="Discretização da mola">
+                </div>
+                <figcaption><strong>Figura 1 </strong>- <i>Discretização da Mola</i></figcaption>
+            </article>
+ 
+            <article>
+                <h3>Passo 2: Sistema Massa-Mola</h3>
+                <p>Definimos as forças que atuam em cada espira e formulamos as equações diferenciais para descrever o movimento.</p>
+                <pre><code>
+                </code></pre>
+                <div class="image-wrap">
+                    <img  width="450px" src="/static/images/forces-diagram.png" alt="Sistema Massa-Mola">
+                </div>
+                <figcaption><strong>Figura 2 </strong>- <i>Sistema Massa-Mola</i></figcaption>
+            </article>
+ 
+            <article>
+                <h3>Passo 3: Colisões</h3>
+                <p>Modelamos as colisões inelásticas entre as espiras durante a queda.</p>
+                <pre><code>
+                </code></pre>
+                <img src="/static/images/colisoes.png" alt="Colisões entre espiras">
+            </article>
+        </section>
+    </main>
+ 
+    <footer>
+        <p>Alunos: Ana Beatriz Lana, Gustavo Carvalhaes e Pedro Leopoldo Dal-Col</p>
+        <p>Baseado no trabalho de Jonata Jefferson Andrade e Tales Lima Fonseca, 2014.</p>
+    </footer>
+</body>
+</html>
