@@ -1,0 +1,201 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Spring Animation</title>
+    <style>
+        canvas {
+            border: 1px solid black;
+            display: block;
+            margin: auto;
+        }
+        body {
+            text-align: center;
+            font-family: Arial, sans-serif;
+        }
+    </style>
+</head>
+<body>
+    <h1>Spring Animation</h1>
+    <canvas id="springCanvas" width="800" height="600"></canvas>
+
+    <script>
+        class Espira {
+            constructor(ke, me, y_i, v_i, primeira = false, ultima = false) {
+                this.ke = ke;
+                this.me = me;
+                this.primeira = primeira;
+                this.ultima = ultima;
+                this.v = v_i;
+                this.y = y_i;
+            }
+
+            edo_y() {
+                return Math.round(this.v * 1000) / 1000;
+            }
+
+            edo_v(g, y_antes, y_depois) {
+                let valor;
+                if (!this.primeira && !this.ultima) {
+                    valor = -g + (-(this.ke / this.me) * Math.abs(y_depois - this.y) + ((this.ke / this.me) * Math.abs(this.y - y_antes)));
+                } else if (this.primeira) {
+                    valor = -g - ((this.ke / this.me) * Math.abs(y_depois - this.y));
+                } else {
+                    valor = -g + ((this.ke / this.me) * Math.abs(this.y - y_antes));
+                }
+
+                return Math.round(valor * 1000) / 1000; // rounding to 4 decimal places
+            }
+
+            toString() {
+                return `espira(ke=${this.ke}, me=${this.me}, y_i=${this.y}, v_i=${this.v}, primeira=${this.primeira}, ultima=${this.ultima})`;
+            }
+        }
+
+        class Mola {
+            constructor(N, k, m, L, g = 10) {
+                this.original_N = N;
+                this.N = N;
+                this.k = k;
+                this.m = m;
+                this.g = g;
+                this.L = L;
+                this.espiras = [];
+            }
+
+            reset() {
+                this.N = this.original_N;
+                this.espiras = [];
+                for (let i = 0; i < this.original_N; i++) {
+                    this.espiras.push(new Espira(
+                        this.k * (this.original_N - 1),
+                        this.m / this.original_N,
+                        0,
+                        0,
+                        i === 0,
+                        i === (this.original_N - 1)
+                    ));
+                }
+
+                this.espiras[0].y = 0;
+                let y_anterior = 0;
+                for (let idx = 1; idx < this.espiras.length; idx++) {
+                    const espira = this.espiras[idx];
+                    const correct_idx = idx;
+                    const somatorio = (-this.g / espira.ke) * this.espiras.slice(correct_idx).reduce((sum, e) => sum + e.me, 0);
+                    espira.y = y_anterior + somatorio;
+                    y_anterior = espira.y;
+                }
+            }
+
+            passo_euler(step) {
+                const new_y = [];
+                const new_v = [];
+                for (let idx = 0; idx < this.espiras.length; idx++) {
+                    const espira = this.espiras[idx];
+                    const y_antes = this.espiras[idx - 1]?.y || 0;
+                    const y_depois = this.espiras[idx + 1]?.y || 0;
+                    new_y.push(espira.y + step * espira.edo_y());
+                    new_v.push(espira.v + step * espira.edo_v(this.g, y_antes, y_depois));
+                }
+
+                for (let idx = 0; idx < this.espiras.length; idx++) {
+                    this.espiras[idx].y = new_y[idx];
+                    this.espiras[idx].v = new_v[idx];
+                }
+
+                if (this.espiras.length > 1 && this.espiras[0].y <= this.espiras[1].y) {
+                    this.colisao();
+                }
+            }
+
+            colisao() {
+                const espira1 = this.espiras.shift();
+                const espira2 = this.espiras.shift();
+
+                const m_res = espira1.me + espira2.me;
+                const v_res = (espira1.me * espira1.v + espira2.me * espira2.v) / m_res;
+
+                const espira_res = new Espira(
+                    espira1.ke,
+                    m_res,
+                    espira2.y,
+                    v_res,
+                    true,
+                    this.espiras.length === 1
+                );
+
+                this.espiras.unshift(espira_res);
+                this.N -= 1;
+            }
+
+            plot_wave(start, end, f = 1) {
+                const amplitude = 0.1;
+                const wavelength = end - start;
+                const x = Array.from({ length: 1000 }, (_, i) => start + (i * (end - start)) / 999);
+                const y = x.map(xi => amplitude * Math.sin(2 * Math.PI * (xi - start) * f / wavelength));
+                return [x, y];
+            }
+
+            plot_slinky(initial_size = true) {
+                let i = 0;
+                let x_arr = [];
+                let y_arr = [];
+                if (this.espiras.length > 1) {
+                    for (let idx = 0; idx < this.espiras.length - 1; idx++) {
+                        const espira1 = this.espiras[idx];
+                        const espira2 = this.espiras[idx + 1];
+                        if (i === 0 && initial_size) {
+                            const [x, y] = this.plot_wave(espira1.y + this.L, espira1.y, (this.original_N + 1) - this.N);
+                            x_arr = x_arr.concat(x);
+                            y_arr = y_arr.concat(y);
+                        }
+
+                        const [x, y] = this.plot_wave(espira1.y, espira2.y, 1);
+                        x_arr = x_arr.concat(x);
+                        y_arr = y_arr.concat(y);
+                        i += 1;
+                    }
+                } else {
+                    const [x, y] = this.plot_wave(this.espiras[0].y - this.L, this.espiras[0].y, this.original_N);
+                    x_arr = x_arr.concat(x);
+                    y_arr = y_arr.concat(y);
+                }
+
+                return [x_arr, y_arr];
+            }
+        }
+
+        function animar_mola(modelo, step = 0.001, initial_size = true, xlim = [-2, 2], ylim = [-2, 0.2]) {
+            modelo.reset();
+
+            const canvas = document.getElementById('springCanvas');
+            const ctx = canvas.getContext('2d');
+
+            const animate = (i) => {
+                modelo.passo_euler(step);
+                const [y, x] = modelo.plot_slinky(initial_size);
+                ctx.clearRect(0, 0, canvas.width, canvas.height);
+                ctx.beginPath();
+                x.forEach((xi, idx) => {
+                    ctx.lineTo(xi * canvas.width / 4 + canvas.width / 2, -y[idx] * canvas.height / 4 + canvas.height / 4);
+                });
+                ctx.stroke();
+                
+
+                if (i < 1 / step) {
+                    requestAnimationFrame(() => animate(i + 1));
+                }
+
+                
+            };
+
+            animate(0);
+        }
+
+        const mola = new Mola(10, 0.6556369155, 0.2510, 0.0722, 10);
+        animar_mola(mola);
+    </script>
+</body>
+</html>
