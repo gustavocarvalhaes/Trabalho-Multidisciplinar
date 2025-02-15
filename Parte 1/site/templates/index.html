@@ -4,93 +4,260 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Mola Maluca - Slinky</title>
-    <link rel="stylesheet" href="/static/styles.css">
+    <script src="https://unpkg.com/@tailwindcss/browser@4"></script>
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Montserrat:ital,wght@0,100..900;1,100..900&display=swap" rel="stylesheet">
 </head>
-<body>
-    <header>
-        <h1>Mola Maluca</h1>
-        <p>Explorando o comportamento fascinante da Slinky em queda livre.</p>
+<body class="container mx-auto" style="font-family: 'Montserrat', sans-serif;">
+    <header class="font-bold font-normal text-center text-3xl">
+        <h1 class="text-black">
+            Sistemas Massa-Mola
+        </h1>
+        <p>Análise da Queda Livre da Mola Maluca</p>
+
+        <hr class="bg-black">
     </header>
 
-    <main class="container">
+    <main class="mt-15">
         <section>
-            <h2>Introdução</h2>
-            <p>Molas são usadas em diversas áreas do conhecimento. A Slinky, conhecida como mola maluca, é um brinquedo que apresenta um comportamento curioso durante a queda livre.</p>
+            
+            <div class="grid grid-cols-6 gap-4">
+                <div class="felx flex-col col-span-4">
+                    <h2 class="text-xl font-semibold">
+                        O que é a Mola Maluca?
+                    </h2>
 
-        <video loop autoplay muted class="video">
-            <source src="static/videos/falling-slinky-orange.mp4" type="video/mp4">
-            Seu navegador não suporta o elemento de vídeo.
-        </video>
-        <figcaption><strong>Vídeo 1 </strong>- <i>Mola maluca em queda livre</i></figcaption>
-                  
+                    <p class="text-base font-normal">
+                        A mola maluca, também conhecida como Slinky, é uma mola com uma forma helicoidal (em espiral) que, quando manipulada, faz movimentos divertidos, como descer escadas de forma fluida e quase "dançante". Isso acontece devido ao modo como ela se comporta quando é esticada, comprimida ou solta.
+                    </p>
+
+                    <p class="text-base font-normal mt-4">
+                        Embora pareça apenas uma brincadeira, a mola maluca tem muito a nos ensinar sobre física, principalmente quando falamos de movimento e energia. Quando você solta a mola maluca, ela não simplesmente cai como uma bola; ela cria um movimento curioso e único, que é o que a torna tão interessante!
+                    </p>
+                </div>
+
+                <div class="col-span-2 h-auto">
+                    <img src="/static/images/slinky.png" alt="Mola Maluca" class="w-full h-auto">
+                </div>
+            </div>
+
+            <div class="grid grid-cols-12 gap-4 mt-8">
+                <div class="col-span-4 flex flex-col gap-2">
+                    <img class="" src="https://gifsdefisica.wordpress.com/wp-content/uploads/2015/03/mola.gif" alt="mola maluca em queda livre">
+
+                    <caption class="text-sm"><a target="_blank" class="italic underline" href="https://gifsdefisica.wordpress.com/gifs-de-molas-e-movimento-ondulatorio/">Queda livre da mola maluca</a></caption>
+                </div>
+
+                <div class="col-span-8 flex flex-col gap-2">
+                    <img class="h-full" src="https://gizmodo.uol.com.br/wp-content/blogs.dir/8/files/2015/08/mola-maluca.gif" alt="mola descendo a escada">
+
+                    <caption class="text-sm"><a target="_blank" class="italic underline" href="https://gizmodo.uol.com.br/escada-rolante-para-mola-maluca/">Mola maluca descendo a escada</a></caption>
+                </div>
+            </div>
         </section>
 
-        <section>
-            <h2>Passo a Passo</h2>
+        <section class="mt-8">
+            <h2 class="text-xl font-semibold">
+                A Lei de Hooke e Como Ela Se Aplica às Molas
+            </h2>
 
-            <article>
-                <h3>Passo 1: Discretização</h3>
-                <p>A mola é dividida em espiras. Cada espira tem uma posição, massa e constante elástica.</p>
-                <pre><code>
-                </code></pre>
-                <div class="image-wrap">
-                    <img  width="450px" src="/static/images/slinky_dicretization.png" alt="Discretização da mola">
-                </div>
-                <figcaption><strong>Figura 1 </strong>- <i>Discretização da Mola</i></figcaption>
-            </article>
- 
-            <article>
-                <h3>Passo 2: Sistema Massa-Mola</h3>
-                <p>Definimos as forças que atuam em cada espira e formulamos as equações diferenciais para descrever o movimento.</p>
-                <pre><code>
-                </code></pre>
-                <div class="image-wrap">
-                    <img  width="450px" src="/static/images/forces-diagram.png" alt="Sistema Massa-Mola">
-                </div>
-                <figcaption><strong>Figura 2 </strong>- <i>Sistema Massa-Mola</i></figcaption>
-            </article>
- 
-            <article>
-                <h3>Passo 3: Colisões</h3>
-                <p>Modelamos as colisões inelásticas entre as espiras durante a queda.</p>
-                <pre><code>
-                </code></pre>
-                <img src="/static/images/colisoes.png" alt="Colisões entre espiras">
-            </article>
+            <p class="text-base font-normal mt-4">
+                Antes de falarmos sobre o comportamento da mola maluca, é importante entender uma lei fundamental da física chamada Lei de Hooke. Essa lei descreve como as molas reagem quando você as estica ou comprime.
+            </p>
 
-            <div class="animation-container">
-                <h3>Spring Animation</h1>
-                <canvas id="springCanvas" width="800" height="600"></canvas>
-                <div class="input-dados">
-                    <label for="N">Número de espiras da mola (N):</label>
-                    <input type="number" step="1" min="5" max="500" value="10" id="N" name="N" required><br><br>
-                    <label for="k">Constante de elasticidade da mola (k):</label>
-                    <input type="number" step="0.001" min="0.05" max="50000" value="0.657" id="k" name="k" step="any" required><br><br>
-                    <label for="m">Massa da mola (m):</label>
-                    <input type="number" step="0.01" min="0.001" max="100" value="0.25" id="m" name="m" step="any" required><br><br>
-                    <label for="L">Tamanho em repouso (L):</label>
-                    <input type="number" step="0.001" min="0.01" max="100" value="0.072" id="L" name="L" step="any" required><br><br>
-                    <label for="g">Gravidade (g):</label>
-                    <select id="g" name="g" required>
-                        <option value="9.81">Terra (9.81 m/s²)</option>
-                        <option value="3.72">Marte (3.72 m/s²)</option>
-                        <option value="24.79">Júpiter (24.79 m/s²)</option>
-                        <option value="8.87">Vênus (8.87 m/s²)</option>
-                        <option value="1.62">Lua (1.62 m/s²)</option>
-                        <option value="10.44">Saturno (10.44 m/s²)</option>
-                        <option value="11.15">Netuno (11.15 m/s²)</option>
-                        <option value="8.69">Urano (8.69 m/s²)</option>
-                        <option value="3.7">Mercúrio (3.7 m/s²)</option>
-                    </select><br><br>
-                    <button id="animateButton" onclick="animar_mola()">Animar a mola</button>
+            <h3 class="font-bold text-base mt-4">A Lei de Hooke (Fórmula)</h3>
+
+            <p class="text-base font-normal mt-4">A Lei de Hooke diz que a força (F) que é aplicada a uma mola é diretamente proporcional à distância (x) que ela se estica ou se comprime em relação à sua posição inicial (quando não há força). A fórmula para isso é:</p>
+
+            <div class="flex items-center justify-center">
+                <img class="w-60" src="static/images/lei-de-hooke.png" alt="F = -k delta x">
+            </div>
+
+            <p class="text-base font-normal mt-4 text-black">
+                Onde:
+                <ul class="list-disc ml-6 space-y-2">
+                    <li>
+                        F é a força exercida pela mola (em Newtons, N).
+                    </li>
+                    <li>
+                        k é a constante elástica da mola (em N/m). Essa constante depende do tipo de mola e de quão "dura" ou "mole" ela é.
+                    </li>
+                    <li>
+                        x é a distância que a mola foi esticada ou comprimida em relação ao seu comprimento natural (em metros, m).
+                    </li>
+                    <li>
+                        O sinal negativo indica que a força é oposta ao movimento: a mola quer voltar à sua forma original, então, se você a esticar, ela vai querer voltar ao seu tamanho inicial, e o contrário também acontece se você a comprimir.
+                    </li>
+                </ul>
+            </p>
+
+            <p class="text-base font-normal mt-4 text-black">
+                Em termos simples: quanto mais você estica ou comprime uma mola, maior é a força que ela exerce para tentar voltar ao seu tamanho original.
+            </p>
+
+            <div class="mx-auto" style="padding-top:42.083%;position:relative;"><iframe src="https://gifer.com/embed/3PyR" width="100%" height="100%" style='position:absolute;top:0;left:0;' frameBorder="0" allowFullScreen></iframe></div><p><a href="https://gifer.com"></a></p>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-xl font-semibold">
+                O Comportamento da Mola Maluca na Queda Livre
+            </h2>
+
+            <p class="text-base font-normal mt-4">
+                Quando você solta a mola maluca em queda livre, ela não cai diretamente como um objeto comum. Isso ocorre porque, quando a mola é liberada, a gravidade age sobre ela, mas sua estrutura helicoidal faz com que a energia seja transferida de uma espira para a próxima, fazendo com que as espiras mais altas se movam antes, enquanto as mais baixas ainda estão suspensas. Isso cria um movimento fluido e uma sensação de "escorregamento" ou "dança" enquanto a mola desce.
+            </p>
+
+            <p class="text-base font-normal mt-4">
+                <span class="font-light italic">“Leva um tempo para a 'informação' de que a Slinky foi solta, em sua extremidade superior, chegar à extremidade inferior.”</span> -  Michael Wheatland, da Universidade de Sydney
+            </p>
+
+            <p class="text-base font-normal mt-4">
+                Esse comportamento da mola maluca é uma ótima maneira de visualizar o conceito de ondas mecânicas, que são ondas de energia que se movem através de um meio (no caso, a mola). O movimento da mola maluca mostra como energia pode se propagar ao longo de um objeto, sem que o próprio objeto se mova completamente de uma vez.
+            </p>
+
+            <img class="w-120 mx-auto mt-8" src="https://cdn.discordapp.com/attachments/1306620765394833469/1338134980907368531/mola.png?ex=67b09250&is=67af40d0&hm=74636004d457f19adcb2330afa8ef7f67d01fba6f33ff2c2febfdc3ab403d077&" alt="imagem da mola como um sistema de massa mola">
+
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-xl font-semibold">
+                Visualização detalhada da propagação de energia
+            </h2>
+
+            <div class="mt-8 mx-auto flex items-center justify-center bg-gray-200 text-white w-173 h-88">
+                <p>Vídeo da propagração de energia na mola</p>
+            </div>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-xl font-semibold">
+                Variáveis e Equações do Problema
+            </h2>
+
+            <p class="text-base font-normal mt-4">
+                Com o objetivo de estudar e simular computacionalmente o problema da queda livre da mola maluca, nós precisamos avaliar cada espira individualmente. Nós avaliamos a posição de cada uma ao longo do tempo e suas velocidades afetadas pela aceleração da gravidade. 
+            </p>
+
+            <p class="text-base font-normal mt-4">
+                Nós realizamos experimentos com diferentes tipos de molas, levando em consideração seu comprimento em repouso (metros), constante de elasticidade k (N/m), massa da mola (kg), número de espiras e a aceleração da gravidade (m/s²).
+            </p>
+
+            <div class="grid grid-cols-3 gap-x-10 mt-8">
+                <div class="bg-gray-200 w-full h-86"></div>
+                <div class="bg-gray-200 w-full h-86"></div>
+                <div class="bg-gray-200 w-full h-86"></div>
+            </div>
+
+            <p class="text-base font-normal mt-4">
+                A partir disso, analisamos os dados extraídos dos vídeos e transformamos as informações em um gráfico que ilustra a posição de algumas espiras ao longo do tempo. No gráfico, é evidente o comportamento peculiar da última espira, que 'aguarda' as demais para que todas caiam simultaneamente.
+            </p>
+
+            <div class="bg-gray-200 w-95 h-76 mx-auto mt-8"></div>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-xl font-semibold">
+                Simulação Computacional do Problema
+            </h2>
+
+            <p class="text-base font-normal mt-4">
+                Fizemos um programa que gera uma animação simulando a situação real para que seja possível testar em diferentes gravidades ou constantes de elasticidades variadas. 
+            </p>
+
+            <p class="text-base font-normal mt-4">
+                O objetivo principal é que os parâmetros da simulação sejam facilmente alterados para permitir diversas visualizações do problema. É interessante observar como o comportamento da mola muda conforme essas variáveis são alteradas.
+            </p>
+        </section>
+
+        <section class="mt-8">
+            <h2 class="text-xl font-semibold">
+                Ambiente de Simulação
+            </h2>
+
+            <div class="grid grid-cols-12 gap-4 mt-8">
+                <div class="col-span-7 bg-gray-200 w-full">
+                    <canvas id="springCanvas" class="w-full h-full"></canvas>
                 </div>
+
+                <div class="col-span-5 w-full">
+                    <div class="flex flex-col gap-4">
+                        <div class="flex flex-col gap-1">
+                            <label for="n_espiras" class="font-semibold text-xl">
+                                Nº de Espiras da Mola
+                            </label>
+
+                            <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="1" min="5" max="500" value="10" id="n_espiras" name="n_espiras" required>
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                            <label for="constante_el" class="font-semibold text-xl">
+                                Constante de Elasticidade K (N/m)
+                            </label>
+
+                            <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="0.001" min="0.05" max="50000" value="0.657" id="constante_el" name="constante_el" step="any" required>
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                            <label for="massa" class="font-semibold text-xl">
+                                Massa da Mola (kg)
+                            </label>
+
+                            <input class="px-2 bg-gray-200 rounded-[10px] h-11"  type="number" step="0.01" min="0.001" max="100" value="0.25" id="massa" name="massa" step="any" required>
+                        </div>
+                        
+                        <div class="flex flex-col gap-1">
+                            <label for="comprimento" class="font-semibold text-xl">
+                                Comprimento em Repouso (m)
+                            </label>
+
+                            <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="0.001" min="0.01" max="100" value="0.072" id="comprimento" name="comprimento" step="any" required>
+                        </div>
+
+                        <div class="flex flex-col gap-1">
+                            <label for="gravidade" class="font-semibold text-xl">
+                                Aceleração da gravidade (m/s²)
+                            </label>
+
+                            <select class="px-2 bg-gray-200 rounded-[10px] h-11" id="gravidade" name="gravidade" required>
+                                <option value="9.81">Terra (9.81 m/s²)</option>
+                                <option value="3.72">Marte (3.72 m/s²)</option>
+                                <option value="24.79">Júpiter (24.79 m/s²)</option>
+                                <option value="8.87">Vênus (8.87 m/s²)</option>
+                                <option value="1.62">Lua (1.62 m/s²)</option>
+                                <option value="10.44">Saturno (10.44 m/s²)</option>
+                                <option value="11.15">Netuno (11.15 m/s²)</option>
+                                <option value="8.69">Urano (8.69 m/s²)</option>
+                                <option value="3.7">Mercúrio (3.7 m/s²)</option>
+                            </select>
+                        </div>
+
+                        <button class="rounded bg-gray-400 text-white hover:bg-gray-500 w-fit px-4 py-2 cursor-pointer" id="animateButton" onclick="animar_mola()">Animar a mola</button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="mt-4 grid grid-cols-3 gap-6">
+                <div class="bg-gray-200 h-52 flex justify-center items-center text-white text-3xl p-20 text-center"> Gráfico Posição x tempo</div>
+
+                <div class="bg-gray-200 h-52 flex justify-center items-center text-white text-3xl p-20 text-center"> Gráfico Velocidade topo</div>
+
+                <div class="bg-gray-200 h-52 flex justify-center items-center text-white text-3xl p-20 text-center"> Gráfico Velocidade da última espira</div>
             </div>
         </section>
     </main>
  
-    <footer>
-        <p>Alunos: Ana Beatriz Lana, Gustavo Carvalhaes e Pedro Leopoldo Dal-Col</p>
-        <p>Baseado no trabalho de Jonata Jefferson Andrade e Tales Lima Fonseca, 2014.</p>
+    <footer class="py-8 grid grid-cols-10 gap-10">
+        <hr class="bg-black mt-8 col-span-10 mb-10">
+
+        <img class="col-span-3" src="https://upload.wikimedia.org/wikipedia/commons/thumb/7/71/Logo_da_UFJF.png/1200px-Logo_da_UFJF.png" alt="logo universidade federal de juiz de fora">
+
+        <p class="col-span-7 text-base font-normal">
+            Este projeto foi desenvolvido por alunos da <strong>Universidade Federal de Juiz de Fora</strong> — Ana Beatriz Lana M. M. Armond, Gustavo Ferreira Carvalhaes e Pedro Leopoldo Dal-Col Vianna — sob a orientação dos professores Rodrigo Weber e Flávia Bastos, no âmbito da disciplina <strong>Trabalho Multidisciplinar (MAC035)</strong> do curso de Engenharia Computacional.
+            <br>
+            <br>
+            Com foco em propósitos educacionais e didáticos, o projeto foi inspirado no trabalho realizado em 2014 pelos alunos Jonata Jefferson Andrade e Tales Lima Fonseca.
+        </p>
     </footer>
 
     <script>
@@ -249,12 +416,12 @@
 
         function animar_mola(step = 0.001, initial_size = true, xlim = [-2, 2], ylim = [-2, 0.2]) {
             try{
-                mola.N = parseInt(document.getElementById('N').value);
+                mola.N = parseInt(document.getElementById('n_espiras').value);
                 mola.original_N = mola.N;
-                mola.k = parseFloat(document.getElementById('k').value);
-                mola.m = parseFloat(document.getElementById('m').value);
-                mola.L = parseFloat(document.getElementById('L').value);
-                mola.g = parseFloat(document.getElementById('g').value);
+                mola.k = parseFloat(document.getElementById('constante_el').value);
+                mola.m = parseFloat(document.getElementById('massa').value);
+                mola.L = parseFloat(document.getElementById('comprimento').value);
+                mola.g = parseFloat(document.getElementById('gravidade').value);
                 console.log(mola);
             }catch(e){
                 alert(e);
