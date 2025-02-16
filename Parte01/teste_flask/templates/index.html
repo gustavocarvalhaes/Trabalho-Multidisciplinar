@@ -4,21 +4,39 @@
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Spring Animation</title>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
     <style>
         canvas {
             border: 1px solid black;
-            display: block;
-            margin: auto;
+            margin: 10px;
         }
         body {
             text-align: center;
             font-family: Arial, sans-serif;
         }
+        .chart-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+        }
+        .chart-wrapper {
+            width: 45%;
+            min-width: 400px;
+            margin: 10px;
+        }
     </style>
 </head>
 <body>
     <h1>Spring Animation</h1>
-    <canvas id="springCanvas" width="800" height="600"></canvas>
+    <canvas id="springCanvas" width="800" height="400"></canvas>
+    <div class="chart-container">
+        <div class="chart-wrapper">
+            <canvas id="positionChart" width="800" height="400"></canvas>
+        </div>
+        <div class="chart-wrapper">
+            <canvas id="velocityChart" width="800" height="400"></canvas>
+        </div>
+    </div>
 
     <script>
         class Espira {
@@ -167,28 +185,127 @@
             }
         }
 
-        function animar_mola(modelo, step = 0.001, initial_size = true, xlim = [-2, 2], ylim = [-2, 0.2]) {
+        function animar_mola(modelo, step = 0.001, initial_size = true) {
             modelo.reset();
 
             const canvas = document.getElementById('springCanvas');
             const ctx = canvas.getContext('2d');
+            const chartConfig = {
+                position: null,
+                velocity: null,
+                data: {
+                    time: [],
+                    posFirst: [],
+                    posMiddle1: [],
+                    posMiddle2: [],
+                    posLast: [],
+
+                    velFirst: [],
+                    velMiddle1: [],
+                    velMiddle2: [],
+                    velLast: []
+                }
+            };
+
+            // Initialize charts
+            const destroyChartIfExists = (chart) => {
+                if (chart) chart.destroy();
+            };
+
+            destroyChartIfExists(chartConfig.position);
+            destroyChartIfExists(chartConfig.velocity);
+
+            const posCtx = document.getElementById('positionChart').getContext('2d');
+            const velCtx = document.getElementById('velocityChart').getContext('2d');
+
+            chartConfig.position = new Chart(posCtx, {
+                type: 'line',
+                data: {
+                    labels: chartConfig.data.time,
+                    datasets: [
+                        { label: 'First Spiral', borderColor: '#FF0000', data: chartConfig.data.posFirst },
+                        { label: 'Middle 1 Spiral', borderColor: '#00FF00', data: chartConfig.data.posMiddle1 },
+                        { label: 'Middle 2 Spiral', borderColor: '#0000FF', data: chartConfig.data.posMiddle2 },
+                        { label: 'Last Spiral', borderColor: '#800080', data: chartConfig.data.posLast }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 0 }, // Disable animations
+                    scales: {
+                        x: { title: { display: true, text: 'Time (s)' } },
+                        y: { title: { display: true, text: 'Position (m)' } }
+                    }
+                }
+            });
+            
+            chartConfig.velocity = new Chart(velCtx, {
+                type: 'line',
+                data: {
+                    labels: chartConfig.data.time,
+                    datasets: [
+                        { label: 'First Spiral', borderColor: '#FFA500', data: chartConfig.data.velFirst },
+                        { label: 'Middle 1 Spiral', borderColor: '#00FF00', data: chartConfig.data.velMiddle1 },
+                        { label: 'Middle 2 Spiral', borderColor: '#0000FF', data: chartConfig.data.velMiddle2 },
+                        { label: 'Last Spiral', borderColor: '#00FFFF', data: chartConfig.data.velLast }
+                    ]
+                },
+                options: {
+                    responsive: true,
+                    maintainAspectRatio: false,
+                    animation: { duration: 0 }, // Disable animations
+                    scales: {
+                        x: { title: { display: true, text: 'Time (s)' } },
+                        y: { title: { display: true, text: 'Velocity (m/s)' } }
+                    }
+                }
+            });
+
+            const midIndex1 = Math.floor((modelo.espiras.length - 1)*0.75);
+            const midIndex2 = Math.ceil((modelo.espiras.length - 1)*0.25);
+            const initalSpirals = modelo.espiras.length
+
 
             const animate = (i) => {
                 modelo.passo_euler(step);
+                const currentTime = i * step;
+
+                // Update data for charts
+                chartConfig.data.time.push(currentTime);
+
+                let numSpirals = modelo.espiras.length;
+                let spiralOffset = initalSpirals-numSpirals
+                
+                chartConfig.data.posFirst.push(modelo.espiras[0].y);
+                chartConfig.data.posMiddle1.push(midIndex1-spiralOffset  >= 0 ? modelo.espiras[midIndex1-spiralOffset].y : modelo.espiras[0].y);
+                chartConfig.data.posMiddle2.push(midIndex2-spiralOffset  >= 0 ? modelo.espiras[midIndex2-spiralOffset].y : modelo.espiras[0].y);
+                chartConfig.data.posLast.push(modelo.espiras[numSpirals - 1].y);
+                
+                chartConfig.data.velFirst.push(modelo.espiras[0].v);
+                chartConfig.data.velMiddle1.push(midIndex1-spiralOffset  >= 0 ? modelo.espiras[midIndex1-spiralOffset].v : modelo.espiras[0].v);
+                chartConfig.data.velMiddle2.push(midIndex2-spiralOffset  >= 0 ? modelo.espiras[midIndex2-spiralOffset].v : modelo.espiras[0].v);
+                chartConfig.data.velLast.push(modelo.espiras[numSpirals - 1].v);
+
+                // Update charts
+                chartConfig.position.update();
+                chartConfig.velocity.update();
+
+                // Draw spring animation
                 const [y, x] = modelo.plot_slinky(initial_size);
                 ctx.clearRect(0, 0, canvas.width, canvas.height);
                 ctx.beginPath();
                 x.forEach((xi, idx) => {
-                    ctx.lineTo(xi * canvas.width / 4 + canvas.width / 2, -y[idx] * canvas.height / 4 + canvas.height / 4);
+                    ctx.lineTo(
+                        xi * canvas.width / 4 + canvas.width / 2,
+                        -y[idx] * canvas.height / 4 + canvas.height / 4
+                    );
                 });
                 ctx.stroke();
-                
 
-                if (i < 1 / step) {
+                if (step*i < 0.6) { // Run for 1000 steps (~1 second simulation)
                     requestAnimationFrame(() => animate(i + 1));
                 }
-
-                
             };
 
             animate(0);
