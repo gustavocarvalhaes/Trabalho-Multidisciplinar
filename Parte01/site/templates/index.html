@@ -42,17 +42,17 @@
                 </div>
             </div>
 
-            <div class="grid grid-cols-12 gap-4 mt-8">
-                <div class="col-span-4 flex flex-col gap-2">
-                    <img class="" src="https://gifsdefisica.wordpress.com/wp-content/uploads/2015/03/mola.gif" alt="mola maluca em queda livre">
+            <div class="flex items-center justify-around gap-6 mt-8">
+                <div class="flex flex-col gap-2">
+                    <img class="max-h-[360px] w-fit" src="https://gifsdefisica.wordpress.com/wp-content/uploads/2015/03/mola.gif" alt="mola maluca em queda livre">
 
-                    <caption class="text-sm"><a target="_blank" class="italic underline" href="https://gifsdefisica.wordpress.com/gifs-de-molas-e-movimento-ondulatorio/">Queda livre da mola maluca</a></caption>
+                    <caption class="text-sm text-center"><a target="_blank" class="italic underline text-center" href="https://gifsdefisica.wordpress.com/gifs-de-molas-e-movimento-ondulatorio/">Queda livre da mola maluca</a></caption>
                 </div>
 
-                <div class="col-span-8 flex flex-col gap-2">
-                    <img class="h-full" src="https://gizmodo.uol.com.br/wp-content/blogs.dir/8/files/2015/08/mola-maluca.gif" alt="mola descendo a escada">
+                <div class="flex flex-col gap-2">
+                    <img class="max-h-[360px] w-fit " src="https://gizmodo.uol.com.br/wp-content/blogs.dir/8/files/2015/08/mola-maluca.gif" alt="mola descendo a escada">
 
-                    <caption class="text-sm"><a target="_blank" class="italic underline" href="https://gizmodo.uol.com.br/escada-rolante-para-mola-maluca/">Mola maluca descendo a escada</a></caption>
+                    <caption class="text-sm text-center"><a target="_blank" class="italic underline text-center" href="https://gizmodo.uol.com.br/escada-rolante-para-mola-maluca/">Mola maluca descendo a escada</a></caption>
                 </div>
             </div>
         </section>
@@ -116,7 +116,7 @@
                 Esse comportamento da mola maluca é uma ótima maneira de visualizar o conceito de ondas mecânicas, que são ondas de energia que se movem através de um meio (no caso, a mola). O movimento da mola maluca mostra como energia pode se propagar ao longo de um objeto, sem que o próprio objeto se mova completamente de uma vez.
             </p>
 
-            <img class="w-120 mx-auto mt-8" src="https://cdn.discordapp.com/attachments/1306620765394833469/1338134980907368531/mola.png?ex=67b09250&is=67af40d0&hm=74636004d457f19adcb2330afa8ef7f67d01fba6f33ff2c2febfdc3ab403d077&" alt="imagem da mola como um sistema de massa mola">
+            <img class="w-120 mx-auto mt-8" src="/static/images/mola-como-um-sistema.png" alt="imagem da mola como um sistema de massa mola">
 
         </section>
 
@@ -125,8 +125,8 @@
                 Visualização detalhada da propagação de energia
             </h2>
 
-            <div class="mt-8 mx-auto flex items-center justify-center bg-gray-200 text-white w-173 h-88">
-                <p>Vídeo da propagração de energia na mola</p>
+            <div class="mt-8 mx-auto text-white flex justify-center items-center">
+                <iframe width="692" height="388" src="https://www.youtube.com/embed/zYdho_gcCRE?si=vWGzcYIAvEM6O8L7&amp;start=32" title="YouTube video player" frameborder="0" allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture; web-share" referrerpolicy="strict-origin-when-cross-origin" allowfullscreen></iframe>
             </div>
         </section>
 
@@ -144,9 +144,20 @@
             </p>
 
             <div class="grid grid-cols-3 gap-x-10 mt-8">
-                <div class="bg-gray-200 w-full h-86"></div>
-                <div class="bg-gray-200 w-full h-86"></div>
-                <div class="bg-gray-200 w-full h-86"></div>
+                <video class="h-fit" height="360" autoplay loop muted>
+                    <source src="/static/videos/mola-metal-grande.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+
+                <video class="h-fit" height="360" autoplay loop muted>
+                    <source src="/static/videos/mola-metal-pequena.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
+
+                <video class="h-fit" height="360" autoplay loop muted>
+                    <source src="/static/videos/mola-roxa-grande.mp4" type="video/mp4">
+                    Seu navegador não suporta a tag de vídeo.
+                </video>
             </div>
 
             <p class="text-base font-normal mt-4">
@@ -182,13 +193,13 @@
 
                 <div class="col-span-5 w-full">
                     <div class="flex flex-col gap-4">
-                        <div class="flex flex-col gap-1">
+                        <!-- <div class="flex flex-col gap-1">
                             <label for="n_espiras" class="font-semibold text-xl">
                                 Nº de Espiras da Mola
                             </label>
 
                             <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="1" min="5" max="500" value="10" id="n_espiras" name="n_espiras" required>
-                        </div>
+                        </div> -->
 
                         <div class="flex flex-col gap-1">
                             <label for="constante_el" class="font-semibold text-xl">
@@ -197,7 +208,7 @@
 
                             <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="0.001" min="0.05" max="50000" value="0.657" id="constante_el" name="constante_el" step="any" required>
                         </div>
-
+                        <!-- 
                         <div class="flex flex-col gap-1">
                             <label for="massa" class="font-semibold text-xl">
                                 Massa da Mola (kg)
@@ -212,7 +223,8 @@
                             </label>
 
                             <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="0.001" min="0.01" max="100" value="0.072" id="comprimento" name="comprimento" step="any" required>
-                        </div>
+                        </div> 
+                        -->
 
                         <div class="flex flex-col gap-1">
                             <label for="gravidade" class="font-semibold text-xl">
