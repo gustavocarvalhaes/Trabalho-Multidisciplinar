@@ -207,7 +207,7 @@
                                 Constante de Elasticidade K (N/m)
                             </label>
 
-                            <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="0.001" min="0.05" max="50000" value="0.657" id="constante_el" name="constante_el" step="any" required>
+                            <input class="px-2 bg-gray-200 rounded-[10px] h-11" type="number" step="0.01" min="0.01" max="3" value="0.657" id="constante_el" name="constante_el" step="0.01" required>
                         </div>
                         <!-- 
                         <div class="flex flex-col gap-1">
@@ -428,14 +428,20 @@
 
         const mola = new Mola(10, 0.6556369155, 0.2510, 0.0722, 10);
         let animationId = null;
+        var positionChart = null;
+        var velocityChart = null;
 
         function animar_mola(step = 0.001, initial_size = true) {
             try{
+                const k = parseFloat(document.getElementById('constante_el').value);
+                if(k > 3 || k < 0.01){
+                    throw new Error('A constante de elasticidade deve estar entre 0.01 e 3');
+                }
                 mola.k = parseFloat(document.getElementById('constante_el').value);
                 mola.g = parseFloat(document.getElementById('gravidade').value);
-                console.log(mola);
             }catch(e){
                 alert(e);
+                return
             }
 
             if(animationId) {
@@ -446,8 +452,8 @@
             const canvas = document.getElementById('springCanvas');
             const ctx = canvas.getContext('2d');
             const chartConfig = {
-                position: null,
-                velocity: null,
+                position: positionChart,
+                velocity: velocityChart,
                 data: {
                     time: [],
                     posFirst: [],
@@ -464,6 +470,7 @@
 
             // Initialize charts
             const destroyChartIfExists = (chart) => {
+                console.log(chart)
                 if (chart) chart.destroy();
             };
 
@@ -472,8 +479,8 @@
 
             const posCtx = document.getElementById('positionChart').getContext('2d');
             const velCtx = document.getElementById('velocityChart').getContext('2d');
-
-            chartConfig.position = new Chart(posCtx, {
+            
+            positionChart = new Chart(posCtx, {
                 type: 'line',
                 data: {
                     labels: chartConfig.data.time,
@@ -494,8 +501,8 @@
                     }
                 }
             });
-            
-            chartConfig.velocity = new Chart(velCtx, {
+            chartConfig.position = positionChart
+            velocityChart = new Chart(velCtx, {
                 type: 'line',
                 data: {
                     labels: chartConfig.data.time,
@@ -516,6 +523,7 @@
                     }
                 }
             });
+            chartConfig.velocity = velocityChart
 
             const midIndex1 = Math.floor((mola.espiras.length - 1)*0.75);
             const midIndex2 = Math.ceil((mola.espiras.length - 1)*0.25);
