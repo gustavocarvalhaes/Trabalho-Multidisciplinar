@@ -1,0 +1,1 @@
+web: cd Parte01/site && gunicorn app:app
