@@ -1,0 +1,1 @@
+web: gunicorn Parte1.site.app:app
