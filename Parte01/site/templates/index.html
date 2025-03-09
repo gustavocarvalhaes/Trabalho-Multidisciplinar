@@ -511,10 +511,10 @@
                 data: {
                     labels: chartConfig.data.time,
                     datasets: [
-                        { label: 'First Spiral', borderColor: '#FF0000', data: chartConfig.data.posFirst },
-                        { label: 'Middle 1 Spiral', borderColor: '#00FF00', data: chartConfig.data.posMiddle1 },
-                        { label: 'Middle 2 Spiral', borderColor: '#0000FF', data: chartConfig.data.posMiddle2 },
-                        { label: 'Last Spiral', borderColor: '#800080', data: chartConfig.data.posLast }
+                        { label: 'Primeira espira', borderColor: '#FF0000', data: chartConfig.data.posFirst },
+                        { label: 'Quarta espira', borderColor: '#0000FF', data: chartConfig.data.posMiddle2 },
+                        { label: 'Sétima espira', borderColor: '#00FF00', data: chartConfig.data.posMiddle1 },
+                        { label: 'Ultima espira', borderColor: '#800080', data: chartConfig.data.posLast }
                     ]
                 },
                 options: {
@@ -522,8 +522,8 @@
                     maintainAspectRatio: false,
                     animation: { duration: 0 }, // Disable animations
                     scales: {
-                        x: { title: { display: true, text: 'Time (s)' } },
-                        y: { title: { display: true, text: 'Position (m)' } }
+                        x: { title: { display: true, text: 'Tempo (s)' } },
+                        y: { title: { display: true, text: 'Posição (m)' } }
                     }
                 }
             });
@@ -533,10 +533,10 @@
                 data: {
                     labels: chartConfig.data.time,
                     datasets: [
-                        { label: 'First Spiral', borderColor: '#FFA500', data: chartConfig.data.velFirst },
-                        { label: 'Middle 1 Spiral', borderColor: '#00FF00', data: chartConfig.data.velMiddle1 },
-                        { label: 'Middle 2 Spiral', borderColor: '#0000FF', data: chartConfig.data.velMiddle2 },
-                        { label: 'Last Spiral', borderColor: '#00FFFF', data: chartConfig.data.velLast }
+                        { label: 'Topo', borderColor: '#FFA500', data: chartConfig.data.velFirst },
+                        //{ label: 'Middle 1 Spiral', borderColor: '#00FF00', data: chartConfig.data.velMiddle1 },
+                        //{ label: 'Middle 2 Spiral', borderColor: '#0000FF', data: chartConfig.data.velMiddle2 },
+                        { label: 'Última espira', borderColor: '#00FFFF', data: chartConfig.data.velLast }
                     ]
                 },
                 options: {
@@ -544,8 +544,8 @@
                     maintainAspectRatio: false,
                     animation: { duration: 0 }, // Disable animations
                     scales: {
-                        x: { title: { display: true, text: 'Time (s)' } },
-                        y: { title: { display: true, text: 'Velocity (m/s)' } }
+                        x: { title: { display: true, text: 'Tempo (s)' } },
+                        y: { title: { display: true, text: 'Velocidade (m/s)' } }
                     }
                 }
             });
@@ -572,8 +572,8 @@
                 chartConfig.data.posLast.push(mola.espiras[numSpirals - 1].y);
                 
                 chartConfig.data.velFirst.push(mola.espiras[0].v);
-                chartConfig.data.velMiddle1.push(midIndex1-spiralOffset  >= 0 ? mola.espiras[midIndex1-spiralOffset].v : mola.espiras[0].v);
-                chartConfig.data.velMiddle2.push(midIndex2-spiralOffset  >= 0 ? mola.espiras[midIndex2-spiralOffset].v : mola.espiras[0].v);
+                //chartConfig.data.velMiddle1.push(midIndex1-spiralOffset  >= 0 ? mola.espiras[midIndex1-spiralOffset].v : mola.espiras[0].v);
+                //chartConfig.data.velMiddle2.push(midIndex2-spiralOffset  >= 0 ? mola.espiras[midIndex2-spiralOffset].v : mola.espiras[0].v);
                 chartConfig.data.velLast.push(mola.espiras[numSpirals - 1].v);
 
                 // Update charts
