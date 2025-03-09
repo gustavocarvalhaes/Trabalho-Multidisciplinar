@@ -1,1 +1,1 @@
-web: cd Parte1/site && gunicorn app:app
+web: cd Parte01/site && gunicorn app:app
